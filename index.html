@@ -148,7 +148,7 @@ button.dia b{display:block;font-size:13px}button.dia span{display:block}button.d
 <main id="app"></main>
 <div id="toast" role="status"></div>
 <script>
-addEventListener('error',e=>{if(!/Faltan los datos de Supabase/.test(e.message))aviso(e.message)});addEventListener('unhandledrejection',e=>aviso((e.reason&&e.reason.message)||String(e.reason)));
+addEventListener('error',e=>{const m=(e&&e.message)||'';if(!m||/^Script error\.?$/i.test(m)||/ResizeObserver loop/i.test(m)||/Faltan los datos de Supabase/.test(m))return;aviso(m)});addEventListener('unhandledrejection',e=>aviso((e.reason&&e.reason.message)||String(e.reason)));
 function aviso(m){let b=document.getElementById('errb');if(!b){b=document.createElement('div');b.id='errb';b.className='warn r';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99;margin:0;border-radius:0';document.body.prepend(b)}b.textContent='Error: '+m+'. Recarga la página; si persiste, revisa la conexión y los datos de Supabase.'}
 document.body.classList.toggle('dark',localStorage.getItem('aed_theme')==='d');
 if(!window.supabase){document.getElementById('app').innerHTML='<div class="card"><b>No se pudo cargar la librería de Supabase.</b><p class="muted">Un bloqueador de contenido o la red lo impide. Prueba en una ventana privada o con otra conexión.</p></div>';throw new Error('Supabase no cargó')}
